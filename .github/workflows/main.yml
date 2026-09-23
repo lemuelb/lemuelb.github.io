@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The LCFM / ECDO Command Center Dashboard — Lemuel Bradford</title>
+    <meta name="author" content="Lemuel Bradford">
+    <script src="https://tailwindcss.com"></script>
+    <style>
+        body { background-color: #0b0f19; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; }
+        .glow { box-shadow: 0 0 20px rgba(244, 63, 94, 0.25); }
+    </style>
+</head>
+<body class="min-h-screen p-4 sm:p-8 flex flex-col justify-between items-center selection:bg-rose-500 selection:text-white">
+
+    <div class="w-full max-w-lg bg-slate-900/60 border border-slate-800 rounded-3xl p-6 space-y-6 shadow-2xl relative overflow-hidden">
+        
+        <!-- Interactive App Top Bar -->
+        <div class="flex justify-between items-center border-b border-slate-800/80 pb-4">
+            <div>
+                <h1 class="text-lg font-bold tracking-wider text-sky-400">PROJECT LCFM / ECDO</h1>
+                <p class="text-[10px] text-slate-500 font-bold tracking-widest uppercase">BY: LEMUEL BRADFORD • ILLAWARRA, NSW</p>
+            </div>
+            <div class="bg-slate-950 px-3 py-1.5 rounded-full text-[10px] font-mono font-bold text-rose-500 border border-rose-950 glow flex items-center gap-1.5 animate-pulse">
+                <span>●</span> LIVE TELEMETRY
+            </div>
+        </div>
+
+        <!-- LCFM Countdown Matrix Panel (Moving Clock) -->
+        <div class="bg-indigo-950/30 border border-indigo-900/50 rounded-2xl p-5 text-center">
+            <h2 class="text-[10px] font-bold text-slate-400 tracking-widest uppercase mb-2">LCFM Core Decoupling Countdown Matrix</h2>
+            <div id="countdown" class="text-2xl sm:text-3xl font-mono font-bold text-rose-500 tracking-tight">0000:000:00:00:00</div>
+            <p class="text-[10px] text-slate-500 font-bold tracking-wider mt-2">YRS : DAYS : HRS : MINS : SECS TO DECOUPLING</p>
+        </div>
+
+        <!-- Interactive Core Slip Simulation Window -->
+        <div class="bg-slate-950 rounded-2xl p-4 border border-slate-800 flex flex-col items-center relative overflow-hidden min-h-[140px] justify-center">
+            <div id="globe" class="text-5xl transition-transform duration-300 ease-out transform">🌐</div>
+            <div id="vectorDisplay" class="text-[10px] font-mono font-bold text-sky-400 mt-4 tracking-wider text-center">SYSTEM RECONSTRUCTION SEQUENCE ACTIVE</div>
+            <div class="absolute top-2 left-3 text-[8px] font-mono text-slate-600">ANALYST: BRADFORD, L.</div>
+        </div>
+
+        <!-- Real-Time User Adjustable Slider Controls -->
+        <div class="space-y-4 pt-2">
+            <div>
+                <div class="flex justify-between text-xs font-bold text-slate-400 mb-1">
+                    <span>Solar Activity Forcing Vector</span>
+                    <span id="solarVal" class="text-amber-400">100%</span>
+                </div>
+                <input type="range" id="solarSlider" min="0" max="100" value="100" class="w-full accent-amber-500 bg-slate-800 h-1.5 rounded-lg appearance-none cursor-pointer">
+            </div>
+
+            <div>
+                <div class="flex justify-between text-xs font-bold text-slate-400 mb-1">
+                    <span>Global Seismicity Frequency</span>
+                    <span id="seismicVal" class="text-purple-400">69%</span>
+                </div>
+                <input type="range" id="seismicSlider" min="0" max="100" value="69" class="w-full accent-purple-500 bg-slate-800 h-1.5 rounded-lg appearance-none cursor-pointer">
+            </div>
+
+            <div>
+                <div class="flex justify-between text-xs font-bold text-slate-400 mb-1">
+                    <span>ECDO Decoupling Factor</span>
+                    <span id="decoupleVal" class="text-emerald-400">43%</span>
+                </div>
+                <input type="range" id="decoupleSlider" min="0" max="100" value="43" class="w-full accent-emerald-500 bg-slate-800 h-1.5 rounded-lg appearance-none cursor-pointer">
+            </div>
+        </div>
+
+        <!-- Static Output Monitor -->
+        <div class="grid grid-cols-3 gap-2 text-center bg-slate-900/40 p-3 rounded-xl border border-slate-800/60 text-[10px] font-bold text-slate-400">
+            <div>
+                <span class="block text-slate-500 text-[9px] uppercase tracking-wider mb-0.5">Slip Rate</span>
+                <span id="slipRateDisplay" class="text-slate-200">28.92 mm/s</span>
+            </div>
+            <div>
+                <span class="block text-slate-500 text-[9px] uppercase tracking-wider mb-0.5">Solar Flux</span>
+                <span id="fluxDisplay" class="text-slate-200">1380.0 SFx</span>
+            </div>
+            <div>
+                <span class="block text-slate-500 text-[9px] uppercase tracking-wider mb-0.5">LOD Delta</span>
+                <span class="text-rose-500">-1.35s</span>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Web App Footer Block -->
+    <footer class="text-[10px] text-slate-600 font-bold tracking-wider text-center mt-6">
+        LCFM COMMAND CENTER WEB PLATFORM • ILLAWARRA REGION, NSW, AUSTRALIA
+    </footer>
+
+    <script>
+        // Moving Countdown Matrix Loop
+        function updateTimeline() {
+            const targetDate = new Date('2031-09-23T04:03:00Z').getTime();
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+
+            if (distance < 0) {
+                document.getElementById('countdown').innerHTML = "0000:000:00:00:00";
+                return;
+            }
+
+            const totalSeconds = Math.floor(distance / 1000);
+            const totalMinutes = Math.floor(totalSeconds / 60);
+            const totalHours = Math.floor(totalMinutes / 60);
+            const totalDays = Math.floor(totalHours / 24);
+
+            const years = Math.floor(totalDays / 365);
+            const days = totalDays % 365;
+            const hours = totalHours % 24;
+            const minutes = totalMinutes % 60;
+            const seconds = totalSeconds % 60;
+
+            const pad = num => String(num).padStart(num > 99 ? 3 : 2, '0');
+            document.getElementById('countdown').innerHTML = 
+                `${pad(years)}:${pad(days)}:${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
+        }
+        setInterval(updateTimeline, 1000);
+        updateTimeline();
+
+        // Interactive Moving Animation Control Matrix
+        const solar = document.getElementById('solarSlider');
+        const seismic = document.getElementById('seismicSlider');
+        const decouple = document.getElementById('decoupleSlider');
+        const globe = document.getElementById('globe');
+        const vectorDisplay = document.getElementById('vectorDisplay');
+        const slipDisplay = document.getElementById('slipRateDisplay');
+        const fluxDisplay = document.getElementById('fluxDisplay');
+
+        function synchronizeSimulation() {
+            document.getElementById('solarVal').innerText = solar.value + '%';
+            document.getElementById('seismicVal').innerText = seismic.value + '%';
+            document.getElementById('decoupleVal').innerText = decouple.value + '%';
+
+            // Calculate live display changes based on physical variables
+            let computedFlux = (1300 + (solar.value * 1.5)).toFixed(1);
+            let computedSlip = (20 + (decouple.value * 0.25)).toFixed(2);
+            fluxDisplay.innerText = computedFlux + ' SFx';
+            slipDisplay.innerText = computedSlip + ' mm/s';
+
+            // Visually turn and shift the planetary globe dynamically
+            let currentRotation = (decouple.value * 0.9).toFixed(1);
+            globe.style.transform = `rotate(${currentRotation}deg) scale(${1 + (seismic.value * 0.001)})`;
+
+            // Change the vector mapping strings dynamically
+            if (decouple.value > 75) {
+                vectorDisplay.innerText = "🚨 CRITICAL INVERSION BREACH: AFRICA TPW SEQUENCE INITIALIZED";
+                vectorDisplay.className = "text-[10px] font-mono font-bold text-rose-500 mt-4 tracking-wider text-center";
+            } else if (decouple.value > 50) {
+                vectorDisplay.innerText = "🌊 WARNING: HYDRODYNAMIC WAVE TRANSIT AT 090°–105° VECTOR";
+                vectorDisplay.className = "text-[10px] font-mono font-bold text-amber-500 mt-4 tracking-wider text-center";
+            } else {
+                vectorDisplay.innerText = "⚙️ LCFM STEADY RECONSTRUCTION SEQUENCE ACTIVE";
+                vectorDisplay.className = "text-[10px] font-mono font-bold text-sky-400 mt-4 tracking-wider text-center";
+            }
+        }
+
+        [solar, seismic, decouple].forEach(slider => slider.addEventListener('input', synchronizeSimulation));
+        synchronizeSimulation();
+    </script>
+</body>
+</html>
