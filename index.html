@@ -3,130 +3,127 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LCFM / ECDO Global Operations Console — Lemuel Bradford</title>
-    <meta name="author" content="Lemuel Bradford">
+    <title>3D Interactive Geodetic Visualizer</title>
     <script src="https://tailwindcss.com"></script>
     <style>
         body { background-color: #030712; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; overflow-x: hidden; }
         .cyber-card { background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.6)); border: 1px solid rgba(56, 189, 248, 0.25); box-shadow: 0 0 40px rgba(0,0,0,0.7); backdrop-filter: blur(20px); border-radius: 24px; }
-        .glow-rose { box-shadow: 0 0 35px rgba(244, 63, 94, 0.3); border-color: rgba(244, 63, 94, 0.4); }
         input[type="range"] { -webkit-appearance: none; appearance: none; background: #1e293b; height: 6px; border-radius: 999px; width: 100%; }
-        input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; background: #38bdf8; border: 2px solid #ffffff; height: 18px; width: 18px; border-radius: 50%; box-shadow: 0 0 12px #38bdf8; cursor: pointer; transition: transform 0.1s; }
-        input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.2); }
+        input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; background: #38bdf8; border: 2px solid #ffffff; height: 18px; width: 18px; border-radius: 50%; box-shadow: 0 0 12px #38bdf8; cursor: pointer; }
     </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between selection:bg-sky-500 selection:text-white">
 
-    <!-- Operational Command Header -->
+    <!-- Header Panel -->
     <header class="border-b border-slate-800 bg-slate-950/90 backdrop-blur sticky top-0 z-50 px-6 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
         <div>
-            <h1 class="text-2xl font-black tracking-widest bg-clip-text text-transparent bg-gradient-to-r from-sky-400 via-indigo-400 to-rose-400">LCFM / ECDO GEODYNAMIC COMMAND CORE</h1>
-            <p class="text-[10px] text-slate-400 font-bold tracking-widest uppercase mt-0.5">PRINCIPAL DEVELOPER: LEMUEL BRADFORD • SYSTEM STATUS: ONLINE</p>
+            <h1 class="text-2xl font-black tracking-widest bg-clip-text text-transparent bg-gradient-to-r from-sky-400 via-indigo-400 to-emerald-400">3D GEODETIC OPERATIONAL HUB</h1>
+            <p class="text-[10px] text-slate-400 font-bold tracking-widest uppercase mt-0.5">INTERACTIVE GRAPHICS MATRIX • DEVELOPER CONSOLE</p>
         </div>
-        <div class="flex gap-4 items-center">
-            <div class="bg-slate-900 border border-emerald-500/30 px-4 py-1.5 rounded-full text-[10px] font-mono font-bold text-emerald-400 flex items-center gap-2">
-                <span class="h-2 w-2 rounded-full bg-emerald-400 animate-ping"></span> LOGGERS ONLINE
-            </div>
-            <div class="text-right text-[10px] font-mono text-slate-500 hidden sm:block">GRID LOC: ILLAWARRA, NSW</div>
+        <div class="bg-slate-900 border border-emerald-500/30 px-4 py-1.5 rounded-full text-[10px] font-mono font-bold text-emerald-400 flex items-center gap-2">
+            <span class="h-2 w-2 rounded-full bg-emerald-400 animate-ping"></span> CANVAS ACTIVE
         </div>
     </header>
 
-    <!-- Master Layout Core -->
-    <main class="max-w-7xl mx-auto px-4 py-8 w-full flex-1 grid grid-cols-1 lg:grid-cols-12 gap-8">
-        
-        <!-- LEFT PANELS: Live Telemetry, Countdowns, and Interactive Globe (7 Columns) -->
-        <div class="lg:col-span-7 space-y-8">
+    <!-- Main Workspace -->
+    <main class="max-w-4xl mx-auto px-4 py-8 w-full flex-1">
+        <div class="cyber-card p-6 space-y-6">
+            <div class="flex justify-between items-center border-b border-slate-800/80 pb-3">
+                <div>
+                    <h3 class="text-sm font-bold text-sky-400 tracking-wider uppercase">3D Projection Matrix</h3>
+                    <p class="text-[10px] text-slate-500 font-semibold uppercase mt-0.5">Mathematical HTML5 Orthographic Projection Engine</p>
+                </div>
+            </div>
             
-            <!-- Dynamic Matrix Convergence Clock -->
-            <div class="cyber-card p-6 text-center border-rose-500/30 glow-rose relative overflow-hidden">
-                <h2 class="text-xs font-bold text-slate-400 tracking-widest uppercase mb-3">LCFM TARGET EPOCH SEQUENCE ALIGNMENT (23 SEPT 2031 04:03 UTC)</h2>
-                <div id="matrixClock" class="text-3xl sm:text-5xl font-mono font-black text-rose-500 tracking-widest">Calculating...</div>
-                <p class="text-[9px] text-slate-500 font-bold mt-2 tracking-widest">YRS : DAYS : HRS : MINS : SECS TO GEOPHYSICAL EXCURSION BOUNDARY</p>
+            <!-- 3D Canvas Rendering Window -->
+            <div class="w-full flex justify-center py-6 bg-slate-950/80 border border-slate-900 rounded-2xl relative overflow-hidden">
+                <canvas id="globeCanvas" width="240" height="240"></canvas>
             </div>
 
-            <!-- Rotating 3D Particle Geosphere Display Container -->
-            <div class="cyber-card p-6 space-y-6">
-                <div class="flex justify-between items-center border-b border-slate-800/80 pb-3">
-                    <div>
-                        <h3 class="text-sm font-bold text-sky-400 tracking-wider uppercase">IITPW Dynamic Earth Matrix</h3>
-                        <p class="text-[10px] text-slate-500 font-semibold uppercase mt-0.5">Intermediate Axis Rotation Inversion Engine</p>
+            <!-- Simulation Controls -->
+            <div class="space-y-5 pt-2">
+                <div>
+                    <div class="flex justify-between text-xs font-bold text-slate-400 mb-1">
+                        <span>Planetary Axis Orientation Transform</span>
+                        <span id="sliderDecoupleVal" class="text-emerald-400 font-mono font-bold">0°</span>
                     </div>
-                    <span id="stateDisplay" class="text-[9px] font-mono font-bold bg-sky-950 text-sky-400 border border-sky-900 px-3 py-1 rounded-full uppercase">Steady State</span>
-                </div>
-                
-                <div class="w-full flex justify-center py-6 bg-slate-950/80 border border-slate-900 rounded-2xl relative overflow-hidden">
-                    <canvas id="globeCanvas" width="240" height="240"></canvas>
-                    <div id="vectorVector" class="absolute bottom-3 left-0 right-0 text-center font-mono text-[10px] text-slate-400 px-4 font-bold uppercase tracking-wider">Vector Status: Stable Geodetic Alignment</div>
-                </div>
-
-                <!-- Simulation Control Sliders -->
-                <div class="space-y-5 pt-2">
-                    <div>
-                        <div class="flex justify-between text-xs font-bold text-slate-400 mb-1">
-                            <span>Solar Activity Torque Forcing</span>
-                            <span id="sliderSolarVal" class="text-amber-400 font-mono font-bold">100%</span>
-                        </div>
-                        <input type="range" id="sliderSolar" min="0" max="100" value="100">
-                    </div>
-                    <div>
-                        <div class="flex justify-between text-xs font-bold text-slate-400 mb-1">
-                            <span>Global Seismicity Multiplier</span>
-                            <span id="sliderSeismicVal" class="text-purple-400 font-mono font-bold">55%</span>
-                        </div>
-                        <input type="range" id="sliderSeismic" min="0" max="100" value="55">
-                    </div>
-                    <div>
-                        <div class="flex justify-between text-xs font-bold text-slate-400 mb-1">
-                            <span>ECDO Decoupling Coefficient</span>
-                            <span id="sliderDecoupleVal" class="text-emerald-400 font-mono font-bold">25%</span>
-                        </div>
-                        <input type="range" id="sliderDecouple" min="0" max="100" value="25">
-                    </div>
+                    <input type="range" id="sliderDecouple" min="0" max="90" value="0">
                 </div>
             </div>
-
-            <!-- Illawarra Local Escarpment Wave Calculator -->
-            <div class="cyber-card p-6 space-y-4">
-                <h3 class="text-sm font-bold text-sky-400 tracking-wider uppercase border-b border-slate-800 pb-2">Illawarra Topographic Safety Profile Calculator</h3>
-                <p class="text-xs text-slate-400 leading-relaxed">
-                    Enter any local elevation across the Illawarra coastal strip to compute its exact wave-deflection margin when fluid inertia drives the Tasman Sea westward during the calculated -1.35-second rotation contraction.
-                </p>
-                <div class="flex gap-4">
-                    <input type="number" id="elevationInput" value="464" class="bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-sm text-slate-100 font-mono focus:border-sky-500 outline-none w-1/2" placeholder="Elevation (m)">
-                    <button onclick="calculateSafety()" class="bg-sky-600 hover:bg-sky-500 transition text-xs font-bold px-4 py-2 rounded-xl text-white w-1/2 uppercase tracking-wider">Compute Safety Profile</button>
-                </div>
-                <div id="safetyResult" class="p-4 bg-emerald-950/20 border border-emerald-900/60 rounded-xl text-xs text-emerald-400 font-mono font-semibold">
-                    📍 TARGET SITE: MOUNT KEIRA (464m) | REGIME: ABSOLUTE ISLAND SANCTUARY (+64m OVER WAVES)
-                </div>
-            </div>
-
         </div>
+    </main>
 
-        <!-- RIGHT PANELS: Asynchronous Data Streams, Appendices & Portals (5 Columns) -->
-        <div class="lg:col-span-5 space-y-8">
+    <footer class="border-t border-slate-800/60 bg-slate-950 py-6 text-center text-[10px] font-mono text-slate-500 px-4">
+        <p>© 2026 Interactive Web Graphics Node • Framework Complete</p>
+    </footer>
+
+    <script>
+        const canvas = document.getElementById('globeCanvas');
+        const ctx = canvas.getContext('2d');
+        const sliderDecouple = document.getElementById('sliderDecouple');
+        let autoRotation = 0;
+
+        // Mathematical 3D-to-2D Wireframe Projection Function
+        function draw3DGeosphere() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            let userAngle = parseInt(sliderDecouple.value);
             
-            <!-- Native Solar Wind Timeline Monitor -->
-            <div class="cyber-card p-6 space-y-4">
-                <h3 class="text-sm font-bold text-sky-400 tracking-wider uppercase border-b border-slate-800 pb-2">Solar Wind Velocity Timeline (Sim)</h3>
-                <div class="w-full h-[180px] bg-slate-950/80 rounded-xl border border-slate-900 p-2 relative">
-                    <canvas id="customTelemetryChart" width="300" height="170" class="w-full h-full"></canvas>
-                </div>
-                <div class="grid grid-cols-2 gap-4 text-center text-[10px] font-mono mt-4">
-                    <div class="bg-slate-950/80 p-2 border border-slate-900 rounded-xl"><span class="block text-slate-500 uppercase font-bold">WMM North Pole</span><span class="text-slate-100 font-bold">86.3°N, 135.2°W</span></div>
-                    <div class="bg-slate-950/80 p-2 border border-slate-900 rounded-xl"><span class="block text-slate-500 uppercase font-bold">LOD Change Delta</span><span class="text-rose-400 font-bold">-1.35 Seconds</span></div>
-                </div>
-            </div>
+            ctx.save();
+            ctx.translate(120, 110);
+            
+            // Apply combining angular math transforms to rotate the grid matrix
+            ctx.rotate((autoRotation + userAngle) * Math.PI / 180);
 
-            <!-- Active Data Feed Logs (USGS Summary Indicators) -->
-            <div class="cyber-card p-6 space-y-4">
-                <h3 class="text-sm font-bold text-sky-400 tracking-wider uppercase border-b border-slate-800 pb-2">Live Global Telemetry Ingestion Desks</h3>
-                <div class="space-y-3 text-xs font-mono">
-                    <div class="flex justify-between items-center p-3 bg-slate-950 rounded-xl border border-slate-900">
-                        <span class="text-slate-400">USGS Daily Seismicity:</span>
-                        <span id="logSeismic" class="text-purple-400 font-bold">Loading...</span>
-                    </div>
-                    <div class="flex justify-between items-center p-3 bg-slate-950 rounded-xl border border-slate-900">
-                        <span class="text-slate-400">NOAA Plasma Wind:</span>
-                        <span id="logSolar" class="text-amber-400 font-bold">Loading...</span>
-                    </div>
-                    <div class="flex justify-between items-center p-3 bg-slate-950 rounded-xl border border-slate-900">
+            // Outer Boundary Sphere Ring
+            ctx.beginPath();
+            ctx.arc(0, 0, 90, 0, 2 * Math.PI);
+            ctx.fillStyle = "#020617";
+            ctx.fill();
+            ctx.lineWidth = 2;
+            ctx.strokeStyle = "#0ea5e9";
+            ctx.stroke();
+
+            // Project 3D Longitudinal Grid Lines
+            for (let i = 0; i < 180; i += 30) {
+                ctx.beginPath();
+                ctx.ellipse(0, 0, 90, 90 * Math.sin(i * Math.PI / 180), 0, 0, 2 * Math.PI);
+                ctx.strokeStyle = "rgba(14, 165, 233, 0.15)";
+                ctx.stroke();
+            }
+
+            // Project 3D Latitudinal Parallel Rings
+            for (let y = -75; y <= 75; y += 25) {
+                if (y === 0) continue;
+                let r = Math.sqrt(90*90 - y*y);
+                ctx.beginPath();
+                ctx.ellipse(0, y * 0.4, r, r * 0.15, 0, 0, 2 * Math.PI);
+                ctx.strokeStyle = "rgba(255, 255, 255, 0.05)";
+                ctx.stroke();
+            }
+
+            // Main Spin Axis Vector Line
+            ctx.beginPath();
+            ctx.moveTo(0, -90);
+            ctx.lineTo(0, 90);
+            ctx.lineWidth = 1.5;
+            ctx.strokeStyle = "rgba(56, 189, 248, 0.5)";
+            ctx.stroke();
+
+            ctx.restore();
+            
+            // Dynamic acceleration tracking loop
+            autoRotation += 0.2;
+            requestAnimationFrame(draw3DGeosphere);
+        }
+
+        function updateControls() {
+            document.getElementById('sliderDecoupleVal').innerText = sliderDecouple.value + '°';
+        }
+        sliderDecouple.addEventListener('input', updateControls);
+
+        // Bootstrap initialization
+        updateControls();
+        draw3DGeosphere();
+    </script>
+</body>
+</html>
