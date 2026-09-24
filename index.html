@@ -6,7 +6,6 @@
     <title>LCFM / ECDO Planetary CommandCenter — Lemuel Bradford</title>
     <meta name="author" content="Lemuel Bradford">
     <script src="https://tailwindcss.com"></script>
-    <script src="https://jsdelivr.net"></script>
     <style>
         body { background-color: #030712; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; }
         .cyber-card { background: linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(30, 41, 59, 0.4)); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 24px; backdrop-filter: blur(16px); }
@@ -100,8 +99,9 @@
         <div class="lg:col-span-5 space-y-8">
             <div class="cyber-card p-6 space-y-4">
                 <h3 class="text-sm font-bold text-sky-400 tracking-wider uppercase border-b border-slate-800 pb-2">Solar Wind Velocity Timeline (Sim)</h3>
-                <div class="w-full h-[180px] relative">
-                    <canvas id="telemetryChart"></canvas>
+                <div class="w-full h-[180px] bg-slate-950/80 rounded-xl border border-slate-900 p-2 relative flex items-center justify-center">
+                    <!-- Native Chart Canvas Replacement -->
+                    <canvas id="customTelemetryChart" width="300" height="160" class="w-full h-full"></canvas>
                 </div>
                 <div class="grid grid-cols-2 gap-4 text-center text-[10px] font-mono mt-4">
                     <div class="bg-slate-950/80 p-2 border border-slate-900 rounded-xl"><span class="block text-slate-500 uppercase font-bold">WMM North Pole</span><span class="text-slate-100 font-bold">86.3°N, 135.2°W</span></div>
@@ -140,6 +140,3 @@
             const years = Math.floor(days / 365);
             const remDays = days % 365;
             const remHrs = hrs % 24;
-            const remMin = min % 60;
-            const remSec = sec % 60;
-            const pad = (n, len=2) => String(n).padStart(len, '0');
