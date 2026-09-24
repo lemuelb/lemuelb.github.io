@@ -1,0 +1,22 @@
+{
+  "name": "lcfm-command-center",
+  "version": "1.0.4",
+  "author": "Lemuel Bradford",
+  "description": "Geodynamic Telemetry & Postulate Simulation Dashboard Hub",
+  "main": "main.js",
+  "scripts": {
+    "web:build": "expo export:web",
+    "desktop:pack": "electron-packager . LCFM_CommandCenter --platform=win32 --arch=x64 --out=dist/ --overwrite --icon=assets/icon.ico",
+    "desktop:build": "npm run web:build && npm run desktop:pack"
+  },
+  "dependencies": {
+    "expo": "~51.0.0",
+    "react": "18.2.0",
+    "react-native": "0.74.1",
+    "react-native-web": "~0.19.10"
+  },
+  "devDependencies": {
+    "electron": "^30.0.0",
+    "electron-packager": "^17.1.2"
+  }
+}
