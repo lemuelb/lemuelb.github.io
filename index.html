@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LCFM / ECDO Global CommandCenter — Lemuel Bradford</title>
+    <meta name="author" content="Lemuel Bradford">
+    <script src="https://tailwindcss.com"></script>
+    <script src="https://jsdelivr.net"></script>
+    <style>
+        body { background-color: #060b13; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; }
+        .cyber-panel { background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(56, 189, 248, 0.15); backdrop-filter: blur(12px); }
+        .glow-cyan { box-shadow: 0 0 25px rgba(56, 189, 248, 0.15); }
+        .glow-rose { box-shadow: 0 0 25px rgba(244, 63, 94, 0.25); }
+        input[type="range"]::-webkit-slider-thumb { background: #38bdf8; border: 2px solid #ffffff; height: 16px; width: 16px; border-radius: 50%; appearance: none; box-shadow: 0 0 10px #38bdf8; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-sky-500 selection:text-white">
+
+    <!-- Top Scientific Header -->
+    <header class="border-b border-slate-800/80 bg-slate-900/40 backdrop-blur sticky top-0 z-50 px-4 py-4">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="text-center md:text-left">
+                <h1 class="text-2xl font-black tracking-widest text-sky-400">LCFM / ECDO COMMAND CENTER</h1>
+                <p class="text-xs text-slate-400 font-bold tracking-widest mt-0.5">PRINCIPAL PI: LEMUEL BRADFORD • SYSTEM STATUS: MONITORING</p>
+            </div>
+            <div class="flex gap-4 items-center">
+                <div class="bg-slate-950/80 border border-emerald-500/30 px-4 py-1.5 rounded-full text-[10px] font-mono font-bold text-emerald-400 flex items-center gap-2">
+                    <span class="h-2 width-2 w-2 rounded-full bg-emerald-400 animate-ping"></span> LOGGERS ONLINE
+                </div>
+                <div class="text-right text-[10px] font-mono text-slate-500">GRID LOC: ILLAWARRA, NSW</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Master Command Grid -->
+    <main class="max-w-7xl mx-auto px-4 py-8 w-full flex-1 grid grid-cols-1 lg:grid-cols-12 gap-8">
+        
+        <!-- LEFT COLUMN: Simulators & Visualizations (7 Columns) -->
+        <div class="lg:col-span-7 space-y-8">
+            
+            <!-- Matrix Clock (Dynamic) -->
+            <div class="cyber-panel rounded-2xl p-6 text-center border-rose-500/20 glow-rose relative overflow-hidden">
+                <div class="absolute top-0 left-0 bg-rose-500/10 text-rose-500 font-mono text-[9px] font-bold px-3 py-1 rounded-br-lg uppercase tracking-wider">LCFM Alignment Horizon</div>
+                <h2 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3 pt-2">Calculated Target Convergence (23 Sept 2031 04:03 UTC)</h2>
+                <div id="matrixClock" class="text-3xl sm:text-5xl font-mono font-black text-rose-500 tracking-wider">00:000:00:00:00</div>
+                <p class="text-[10px] text-slate-500 font-bold mt-2 tracking-widest">YEARS : DAYS : HOURS : MINS : SECONDS TO EXCURSION PHASE</p>
+            </div>
+
+            <!-- Interactive Dynamic Geosphere Map Window -->
+            <div class="cyber-panel rounded-2xl p-6 space-y-4">
+                <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+                    <h3 class="text-sm font-bold text-sky-400 tracking-wider uppercase">IITPW Dynamic Earth Projection</h3>
+                    <span id="stateDisplay" class="text-[10px] font-mono font-bold bg-sky-950/80 text-sky-400 border border-sky-900 px-3 py-1 rounded-full uppercase">Steady State Matrix</span>
+                </div>
+                
+                <div class="w-full flex justify-center py-4 bg-slate-950/60 border border-slate-900 rounded-xl relative">
+                    <canvas id="globeCanvas" width="220" height="220" class="transition-transform duration-200"></canvas>
+                    <div id="vectorVector" class="absolute bottom-3 left-0 right-0 text-center font-mono text-[10px] text-slate-500 px-4 font-semibold uppercase tracking-wider">Vector Status: Stable Geodetic Alignment</div>
+                </div>
+
+                <!-- Live Control Sliders -->
+                <div class="space-y-4 pt-2">
+                    <div>
+                        <div class="flex justify-between text-xs font-bold text-slate-400 mb-1">
+                            <span>Solar Wind Activation Metric</span>
+                            <span id="sliderSolarVal" class="text-amber-400 font-mono">100%</span>
+                        </div>
+                        <input type="range" id="sliderSolar" min="0" max="100" value="100" class="w-full bg-slate-800 h-1 rounded-lg appearance-none cursor-pointer">
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-xs font-bold text-slate-400 mb-1">
+                            <span>Global Seismicity Multiplier</span>
+                            <span id="sliderSeismicVal" class="text-purple-400 font-mono">55%</span>
+                        </div>
+                        <input type="range" id="sliderSeismic" min="0" max="100" value="55" class="w-full bg-slate-800 h-1 rounded-lg appearance-none cursor-pointer">
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-xs font-bold text-slate-400 mb-1">
+                            <span>ECDO Decoupling Coefficient</span>
+                            <span id="sliderDecouple" min="0" max="100" value="25" class="w-full bg-slate-800 h-1 rounded-lg appearance-none cursor-pointer">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Illawarra Local Escarpment Wave Calculator -->
+            <div class="cyber-panel rounded-2xl p-6 space-y-4">
+                <h3 class="text-sm font-bold text-sky-400 tracking-wider uppercase border-b border-slate-800 pb-2">Illawarra Topographic Safety Profile Calculator</h3>
+                <p class="text-xs text-slate-400 leading-relaxed">
+                    Enter any local elevation across the Illawarra strip to compute its wave-deflection safety margin when fluid inertia drives the Tasman Sea westward during the calculated -1.35-second rotation contraction.
+                </p>
+                <div class="flex gap-4">
+                    <input type="number" id="elevationInput" value="464" class="bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-sm text-slate-100 font-mono focus:border-sky-500 outline-none w-1/2" placeholder="Elevation (m)">
+                    <button onclick="calculateSafety()" class="bg-sky-600 hover:bg-sky-500 transition text-xs font-bold px-6 py-2 rounded-xl text-white w-1/2">Compute Safe Profile</button>
+                </div>
+                <div id="safetyResult" class="p-4 bg-emerald-950/20 border border-emerald-900/60 rounded-xl text-xs text-emerald-400 font-mono font-semibold">
+                    📍 TARGET SITE: MOUNT KEIRA (464m) | REGIME: ABSOLUTE ISLAND SANCTUARY (+64m OVER WAVES)
+                </div>
+            </div>
+
+        </div>
+
+        <!-- RIGHT COLUMN: Analytics, Portals & Repos (5 Columns) -->
+        <div class="lg:col-span-5 space-y-8">
+            
+            <!-- Real-Time Chart Widget -->
+            <div class="cyber-panel rounded-2xl p-6 space-y-4">
+                <h3 class="text-sm font-bold text-sky-400 tracking-wider uppercase border-b border-slate-800 pb-2">Solar Wind Velocity Timeline (Sim)</h3>
+                <div class="w-full max-h-[160px]">
+                    <canvas id="telemetryChart"></canvas>
+                </div>
+                <div class="grid grid-cols-2 gap-4 text-center text-xs font-mono">
+                    <div class="bg-slate-950/60 p-2 border border-slate-900 rounded-xl"><span class="block text-[10px] text-slate-500 uppercase font-bold">WMM North Pole</span><span class="text-slate-100 font-bold">86.3°N, 135.2°W</span></div>
+                    <div class="bg-slate-950/60 p-2 border border-slate-900 rounded-xl"><span class="block text-[10px] text-slate-500 uppercase font-bold">LOD Rotation Change</span><span class="text-rose-400 font-bold">-1.35 Seconds</span></div>
+                </div>
+            </div>
+
+            <!-- Mathematical Core Accordion -->
+            <div class="cyber-panel rounded-2xl p-6 space-y-4">
+                <h3 class="text-sm font-bold text-sky-400 tracking-wider uppercase border-b border-slate-800 pb-2">Mathematical Appendix Docs</h3>
+                <details class="group border border-slate-800 rounded-xl p-3 bg-slate-950/40">
+                    <summary class="text-xs font-bold text-slate-300 cursor-pointer list-none flex justify-between items-center group-open:text-sky-400 transition">
+                        <span>1. Master LCFM Governing Tensor Equation</span><span class="text-[10px] text-slate-500 group-open:rotate-180 transform transition">▼</span>
+                    </summary>
+                    <p class="text-[11px] font-mono text-sky-200 bg-slate-950 p-3 rounded-lg border border-slate-900 mt-2 overflow-x-auto">
+                        T_LCFM = [ T_Noah + (ΔT_Past * (C_c_exp * ln(║(τ_crit / τ_cmb)║))) - (P * M_L) ] + [ ΔS_Terminator / (∇ × B_ext) ] + Φ_Taurid
+                    </p>
+                </details>
+                <details class="group border border-slate-800 rounded-xl p-3 bg-slate-950/40">
+                    <summary class="text-xs font-bold text-slate-300 cursor-pointer list-none flex justify-between items-center group-open:text-sky-400 transition">
+                        <span>2. Angular Momentum Velocity Divergence</span><span class="text-[10px] text-slate-500 group-open:rotate-180 transform transition">▼</span>
