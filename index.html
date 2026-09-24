@@ -3,155 +3,129 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LCFM / ECDO CommandCenter — Lemuel Bradford</title>
+    <title>LCFM / ECDO Global Operations Console — Lemuel Bradford</title>
     <meta name="author" content="Lemuel Bradford">
     <script src="https://tailwindcss.com"></script>
     <style>
-        body { background-color: #030712; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; }
-        .cyber-card { background: linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(30, 41, 59, 0.4)); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 20px; }
+        body { background-color: #030712; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; overflow-x: hidden; }
+        .cyber-card { background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.6)); border: 1px solid rgba(56, 189, 248, 0.25); box-shadow: 0 0 40px rgba(0,0,0,0.7); backdrop-filter: blur(20px); border-radius: 24px; }
+        .glow-rose { box-shadow: 0 0 35px rgba(244, 63, 94, 0.3); border-color: rgba(244, 63, 94, 0.4); }
+        input[type="range"] { -webkit-appearance: none; appearance: none; background: #1e293b; height: 6px; border-radius: 999px; width: 100%; }
+        input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; background: #38bdf8; border: 2px solid #ffffff; height: 18px; width: 18px; border-radius: 50%; box-shadow: 0 0 12px #38bdf8; cursor: pointer; transition: transform 0.1s; }
+        input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.2); }
     </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between p-4">
+<body class="min-h-screen flex flex-col justify-between selection:bg-sky-500 selection:text-white">
 
-    <!-- Header Panel -->
-    <header class="border-b border-slate-800 bg-slate-950/70 p-4 rounded-xl mb-4">
-        <div class="text-center">
-            <h1 class="text-xl font-black tracking-widest text-sky-400">LCFM / ECDO INTERACTIVE MATRIX</h1>
-            <p class="text-[10px] text-slate-400 font-bold uppercase tracking-wider mt-1">Principal Investigator: Lemuel Bradford • Illawarra, NSW</p>
+    <!-- Operational Command Header -->
+    <header class="border-b border-slate-800 bg-slate-950/90 backdrop-blur sticky top-0 z-50 px-6 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+        <div>
+            <h1 class="text-2xl font-black tracking-widest bg-clip-text text-transparent bg-gradient-to-r from-sky-400 via-indigo-400 to-rose-400">LCFM / ECDO GEODYNAMIC COMMAND CORE</h1>
+            <p class="text-[10px] text-slate-400 font-bold tracking-widest uppercase mt-0.5">PRINCIPAL DEVELOPER: LEMUEL BRADFORD • SYSTEM STATUS: MULTI-STREAM FEEDING</p>
+        </div>
+        <div class="flex gap-4 items-center">
+            <div class="bg-slate-900 border border-emerald-500/30 px-4 py-1.5 rounded-full text-[10px] font-mono font-bold text-emerald-400 flex items-center gap-2">
+                <span class="h-2 w-2 rounded-full bg-emerald-400 animate-ping"></span> LOGGERS ONLINE
+            </div>
+            <div class="text-right text-[10px] font-mono text-slate-500 hidden sm:block">GRID LOC: ILLAWARRA, NSW</div>
         </div>
     </header>
 
-    <!-- Main Grid -->
-    <main class="space-y-6 w-full max-w-xl mx-auto flex-1">
+    <!-- Master Layout Core -->
+    <main class="max-w-7xl mx-auto px-4 py-8 w-full flex-1 grid grid-cols-1 lg:grid-cols-12 gap-8">
         
-        <!-- Countdown Panel -->
-        <div class="cyber-card p-6 text-center border-rose-500/30">
-            <h2 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">LCFM TARGET ALIGNMENT WINDOW (23 SEPT 2031)</h2>
-            <div id="matrixClock" class="text-3xl font-mono font-black text-rose-500 tracking-wider">Calculating...</div>
-            <p class="text-[9px] text-slate-500 font-bold mt-1 tracking-widest">YRS : DAYS : HRS : MINS : SECS TO EXCURSION</p>
-        </div>
-
-        <!-- Interactive Text-Based Geosphere Projection Box -->
-        <div class="cyber-card p-6 space-y-4">
-            <div class="flex justify-between items-center border-b border-slate-800 pb-2">
-                <h3 class="text-xs font-bold text-sky-400 tracking-wider uppercase">IITPW Dynamic Earth Matrix</h3>
-                <span id="stateDisplay" class="text-[9px] font-mono font-bold bg-sky-950 px-2 py-0.5 rounded text-sky-400 border border-sky-900 uppercase">Steady State</span>
-            </div>
+        <!-- LEFT PANELS: Live Telemetry, Countdowns, and Interactive Globe (7 Columns) -->
+        <div class="lg:col-span-7 space-y-8">
             
-            <div class="w-full flex flex-col items-center py-6 bg-slate-950 rounded-xl border border-slate-900">
-                <div id="globeDisplay" class="text-5xl transition-transform duration-200">🌐</div>
-                <div id="vectorVector" class="text-center font-mono text-[10px] text-slate-500 mt-4 px-2 font-bold uppercase tracking-wider">Vector Status: Stable Geodetic Alignment</div>
+            <!-- Dynamic Matrix Convergence Clock -->
+            <div class="cyber-card p-6 text-center border-rose-500/30 glow-rose relative overflow-hidden">
+                <h2 class="text-xs font-bold text-slate-400 tracking-widest uppercase mb-3">LCFM TARGET EPOCH SEQUENCE ALIGNMENT (23 SEPT 2031 04:03 UTC)</h2>
+                <div id="matrixClock" class="text-3xl sm:text-5xl font-mono font-black text-rose-500 tracking-widest">00:000:00:00:00</div>
+                <p class="text-[9px] text-slate-500 font-bold mt-2 tracking-widest">YRS : DAYS : HRS : MINS : SECS TO GEOPHYSICAL EXCURSION BOUNDARY</p>
             </div>
 
-            <!-- Simulation Controls -->
-            <div class="space-y-4 pt-2">
-                <div>
-                    <div class="flex justify-between text-xs font-bold text-slate-400 mb-1">
-                        <span>Solar Activity Forcing Vector</span>
-                        <span id="sliderSolarVal" class="text-amber-400 font-mono font-bold">100%</span>
+            <!-- Rotating 3D Particle Geosphere Display Container -->
+            <div class="cyber-card p-6 space-y-6">
+                <div class="flex justify-between items-center border-b border-slate-800/80 pb-3">
+                    <div>
+                        <h3 class="text-sm font-bold text-sky-400 tracking-wider uppercase">IITPW Dynamic Earth Matrix</h3>
+                        <p class="text-[10px] text-slate-500 font-semibold uppercase mt-0.5">Intermediate Axis Rotation Inversion Engine</p>
                     </div>
-                    <input type="range" id="sliderSolar" min="0" max="100" value="100" class="w-full">
+                    <span id="stateDisplay" class="text-[9px] font-mono font-bold bg-sky-950 text-sky-400 border border-sky-900 px-3 py-1 rounded-full uppercase">Steady State</span>
                 </div>
-                <div>
-                    <div class="flex justify-between text-xs font-bold text-slate-400 mb-1">
-                        <span>Global Seismicity Frequency</span>
-                        <span id="sliderSeismicVal" class="text-purple-400 font-mono font-bold">55%</span>
-                    </div>
-                    <input type="range" id="sliderSeismic" min="0" max="100" value="55" class="w-full">
+                
+                <div class="w-full flex justify-center py-6 bg-slate-950/80 border border-slate-900 rounded-2xl relative overflow-hidden">
+                    <canvas id="globeCanvas" width="240" height="240"></canvas>
+                    <div id="vectorVector" class="absolute bottom-3 left-0 right-0 text-center font-mono text-[10px] text-slate-400 px-4 font-bold uppercase tracking-wider">Vector Status: Stable Geodetic Alignment</div>
                 </div>
-                <div>
-                    <div class="flex justify-between text-xs font-bold text-slate-400 mb-1">
-                        <span>ECDO Decoupling Coefficient</span>
-                        <span id="sliderDecoupleVal" class="text-emerald-400 font-mono font-bold">25%</span>
+
+                <!-- Simulation Control Sliders -->
+                <div class="space-y-5 pt-2">
+                    <div>
+                        <div class="flex justify-between text-xs font-bold text-slate-400 mb-1">
+                            <span>Solar Wind Activation Metric</span>
+                            <span id="sliderSolarVal" class="text-amber-400 font-mono font-bold">100%</span>
+                        </div>
+                        <input type="range" id="sliderSolar" min="0" max="100" value="100">
                     </div>
-                    <input type="range" id="sliderDecouple" min="0" max="100" value="25" class="w-full">
+                    <div>
+                        <div class="flex justify-between text-xs font-bold text-slate-400 mb-1">
+                            <span>Global Seismicity Multiplier</span>
+                            <span id="sliderSeismicVal" class="text-purple-400 font-mono font-bold">55%</span>
+                        </div>
+                        <input type="range" id="sliderSeismic" min="0" max="100" value="55">
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-xs font-bold text-slate-400 mb-1">
+                            <span>ECDO Decoupling Coefficient</span>
+                            <span id="sliderDecoupleVal" class="text-emerald-400 font-mono font-bold">25%</span>
+                        </div>
+                        <input type="range" id="sliderDecouple" min="0" max="100" value="25">
+                    </div>
                 </div>
             </div>
+
+            <!-- Illawarra Local Escarpment Wave Calculator -->
+            <div class="cyber-card p-6 space-y-4">
+                <h3 class="text-sm font-bold text-sky-400 tracking-wider uppercase border-b border-slate-800 pb-2">Illawarra Topographic Safety Profile Calculator</h3>
+                <p class="text-xs text-slate-400 leading-relaxed">
+                    Enter any local elevation across the Illawarra coastal strip to compute its exact wave-deflection margin when fluid inertia drives the Tasman Sea westward during the calculated -1.35-second rotation contraction.
+                </p>
+                <div class="flex gap-4">
+                    <input type="number" id="elevationInput" value="464" class="bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-sm text-slate-100 font-mono focus:border-sky-500 outline-none w-1/2" placeholder="Elevation (m)">
+                    <button onclick="calculateSafety()" class="bg-sky-600 hover:bg-sky-500 transition text-xs font-bold px-4 py-2 rounded-xl text-white w-1/2 uppercase tracking-wider">Compute Safety Profile</button>
+                </div>
+                <div id="safetyResult" class="p-4 bg-emerald-950/20 border border-emerald-900/60 rounded-xl text-xs text-emerald-400 font-mono font-semibold">
+                    📍 TARGET SITE: MOUNT KEIRA (464m) | REGIME: ABSOLUTE ISLAND SANCTUARY (+64m OVER WAVES)
+                </div>
+            </div>
+
         </div>
 
-        <!-- Elevation Calculator -->
-        <div class="cyber-card p-6 space-y-4">
-            <h3 class="text-sm font-bold text-sky-400 tracking-wider uppercase border-b border-slate-800 pb-2">Illawarra Topographic Safety Profile</h3>
-            <div class="flex gap-4">
-                <input type="number" id="elevationInput" value="464" class="bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-sm text-slate-100 font-mono focus:border-sky-500 outline-none w-1/2">
-                <button onclick="calculateSafety()" class="bg-sky-600 hover:bg-sky-500 transition text-xs font-bold px-4 py-2 rounded-xl text-white w-1/2 uppercase tracking-wider">Compute Safety</button>
-            </div>
-            <div id="safetyResult" class="p-4 bg-emerald-950/20 border border-emerald-900/60 rounded-xl text-xs text-emerald-400 font-mono font-semibold">
-                📍 TARGET SITE: MOUNT KEIRA (464m) | REGIME: ABSOLUTE ISLAND SANCTUARY (+64m OVER WAVES)
-            </div>
-        </div>
-
-        <!-- Telemetry Data Grid -->
-        <div class="cyber-card p-4 grid grid-cols-2 gap-4 text-center text-[10px] font-mono">
-            <div class="bg-slate-950 p-2 border border-slate-900 rounded-lg"><span class="block text-slate-500 uppercase font-bold">WMM North Pole</span><span class="text-slate-100 font-bold">86.3°N, 135.2°W</span></div>
-            <div class="bg-slate-950 p-2 border border-slate-900 rounded-lg"><span class="block text-slate-500 uppercase font-bold">LOD Change Delta</span><span class="text-rose-400 font-bold">-1.35 Seconds</span></div>
-        </div>
-
-    </main>
-
-    <footer class="border-t border-slate-800/60 text-center text-[10px] font-mono text-slate-500 p-4 mt-4">
-        <p>© 2026 Lemuel Bradford. All rights reserved. • Illawarra Region, NSW, Australia</p>
-    </footer>
-
-    <script>
-        function executeClockLoop() {
-            const target = new Date('2031-09-23T04:03:00Z').getTime();
-            const now = new Date().getTime();
-            const diff = target - now;
-            if (diff <= 0) { document.getElementById('matrixClock').innerText = "00:000:00:00:00"; return; }
-            const sec = Math.floor(diff / 1000);
-            const min = Math.floor(sec / 60);
-            const hrs = Math.floor(min / 60);
-            const days = Math.floor(hrs / 24);
-            const years = Math.floor(days / 365);
-            const remDays = days % 365;
-            const remHrs = hrs % 24;
-            const remMin = min % 60;
-            const remSec = sec % 60;
-            const pad = (n, len=2) => String(n).padStart(len, '0');
-            document.getElementById('matrixClock').innerText = `${pad(years)}:${pad(remDays, 3)}:${pad(remHrs)}:${pad(remMin)}:${pad(remSec)}`;
-        }
-        setInterval(executeClockLoop, 1000);
-        executeClockLoop();
-
-        const sliderSolar = document.getElementById('sliderSolar');
-        const sliderSeismic = document.getElementById('sliderSeismic');
-        const sliderDecouple = document.getElementById('sliderDecouple');
-        const displayState = document.getElementById('stateDisplay');
-        const textVector = document.getElementById('vectorVector');
-        const globeDisplay = document.getElementById('globeDisplay');
-
-        function updateApplicationControls() {
-            document.getElementById('sliderSolarVal').innerText = sliderSolar.value + '%';
-            document.getElementById('sliderSeismicVal').innerText = sliderSeismic.value + '%';
-            document.getElementById('sliderDecoupleVal').innerText = sliderDecouple.value + '%';
+        <!-- RIGHT PANELS: Asynchronous Data Streams, Appendices & Portals (5 Columns) -->
+        <div class="lg:col-span-5 space-y-8">
             
-            let val = parseInt(sliderDecouple.value);
-            
-            // Turn and scale the globe natively based on the decoupling slider metric
-            globeDisplay.style.transform = "rotate(" + (val * 0.9) + "deg) scale(" + (1 + (val * 0.002)) + ")";
+            <!-- Native Solar Wind Timeline Monitor -->
+            <div class="cyber-card p-6 space-y-4">
+                <h3 class="text-sm font-bold text-sky-400 tracking-wider uppercase border-b border-slate-800 pb-2">Asynchronous Solar wind Velocity Stream (NOAA Sim)</h3>
+                <div class="w-full h-[180px] bg-slate-950/80 rounded-xl border border-slate-900 p-2 relative">
+                    <canvas id="customTelemetryChart" width="300" height="170" class="w-full h-full"></canvas>
+                </div>
+                <div class="grid grid-cols-2 gap-4 text-center text-[10px] font-mono mt-4">
+                    <div class="bg-slate-950/80 p-2 border border-slate-900 rounded-xl"><span class="block text-slate-500 uppercase font-bold">WMM North Pole</span><span class="text-slate-100 font-bold">86.3°N, 135.2°W</span></div>
+                    <div class="bg-slate-950/80 p-2 border border-slate-900 rounded-xl"><span class="block text-slate-500 uppercase font-bold">LOD Change Delta</span><span class="text-rose-400 font-bold">-1.35 Seconds</span></div>
+                </div>
+            </div>
 
-            if (val > 75) {
-                displayState.innerText = "CRITICAL COUPLING INVERSION";
-                displayState.className = "text-[10px] font-mono font-bold bg-rose-950 text-rose-400 border border-rose-900 px-2 py-0.5 rounded uppercase animate-pulse";
-                textVector.innerText = "🚨 BREAKING AXIS: CRUST SHIFTING 90° OVER AFRICA";
-                textVector.className = "text-center font-mono text-[10px] text-rose-400 mt-4 px-2 font-bold uppercase tracking-wider";
-            } else if (val > 50) {
-                displayState.innerText = "FLUID INERTIA TRANSIT ACTIVE";
-                displayState.className = "text-[10px] font-mono font-bold bg-amber-950 text-amber-400 border border-amber-900 px-2 py-0.5 rounded uppercase";
-                textVector.innerText = "🌊 WARNING: CONTINENTAL OCEAN INUNDATION FRONT AT 090°–105°";
-                textVector.className = "text-center font-mono text-[10px] text-amber-400 mt-4 px-2 font-bold uppercase tracking-wider";
-            } else {
-                displayState.innerText = "STEADY STATE MATRIX";
-                displayState.className = "text-[10px] font-mono font-bold bg-sky-950 text-sky-400 border border-sky-900 px-2 py-0.5 rounded uppercase";
-                textVector.innerText = "Vector Status: Stable Geodetic Alignment";
-                textVector.className = "text-center font-mono text-[10px] text-slate-500 mt-4 px-2 font-semibold uppercase tracking-wider";
-            }
-        }
-        [sliderSolar, sliderSeismic, sliderDecouple].forEach(s => s.addEventListener('input', updateApplicationControls));
-
-        function calculateSafety() {
-            let elevation = parseInt(document.getElementById('elevationInput').value);
-            let targetBox = document.getElementById('safetyResult');
-            if (isNaN(elevation)) { targetBox.innerText = "❌ ERROR: INVALID GEODETIC ELEVATION INPUT"; return; }
-            if (elevation >= 400) {
+            <!-- Active Data Feed Logs (USGS Summary Indicators) -->
+            <div class="cyber-card p-6 space-y-4">
+                <h3 class="text-sm font-bold text-sky-400 tracking-wider uppercase border-b border-slate-800 pb-2">Live Global Telemetry Ingestion Desks</h3>
+                <div class="space-y-3 text-xs font-mono">
+                    <div class="flex justify-between items-center p-3 bg-slate-950 rounded-xl border border-slate-900">
+                        <span class="text-slate-400">USGS Daily Seismicity:</span>
+                        <span id="logSeismic" class="text-purple-400 font-bold">24 Events (M4.5+)</span>
+                    </div>
+                    <div class="flex justify-between items-center p-3 bg-slate-950 rounded-xl border border-slate-900">
+                        <span class="text-slate-400">NOAA Plasma Wind:</span>
+                        <span id="logSolar" class="text-amber-400 font-bold">412 km/s (Active)</span>
+                    </div>
